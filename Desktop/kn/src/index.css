@@ -100,3 +100,12 @@ body {
   -webkit-text-fill-color: transparent;
   animation: shimmer 3s linear infinite;
 }
+
+/* Hide Framer sponsors logo banner and right-side visual mockups */
+[data-framer-name="Sponsors"],
+[data-framer-name="Visual Content"],
+.framer-cwy1wc,
+.framer-1bav4i1 {
+  display: none !important;
+}
+
