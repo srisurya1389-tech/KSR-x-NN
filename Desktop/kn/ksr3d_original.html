@@ -1,0 +1,583 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:#0A0A0A;color:#E8D5A3;font-family:'Montserrat',sans-serif;overflow-x:hidden}
+::-webkit-scrollbar{width:3px}
+::-webkit-scrollbar-track{background:#0A0A0A}
+::-webkit-scrollbar-thumb{background:#C9A84C;border-radius:2px}
+@keyframes shimmer{0%{background-position:-200% center}100%{background-position:200% center}}
+@keyframes scrolldrop{0%{top:-20px;opacity:0}20%{opacity:1;top:0}80%{opacity:1;top:32px}100%{top:60px;opacity:0}}
+@keyframes navfade{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:none}}
+.rv{opacity:0;transform:translateY(38px);transition:opacity .95s cubic-bezier(.22,1,.36,1),transform .95s cubic-bezier(.22,1,.36,1)}
+.rv.on{opacity:1;transform:none}
+.d1{transition-delay:.12s}.d2{transition-delay:.25s}.d3{transition-delay:.38s}.d4{transition-delay:.51s}.d5{transition-delay:.64s}
+.ph img{transition:transform .55s ease}
+.ph:hover img{transform:scale(1.05)}
+.ph{overflow:hidden}
+@media(max-width:860px){#photo-grid{columns:2!important}}
+@media(max-width:540px){#photo-grid{columns:1!important}}
+@keyframes heroShow{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:none}}
+#hero .rv{animation:heroShow .85s cubic-bezier(.22,1,.36,1) both;transition:none}
+#hero .rv.d1{animation-delay:.22s}
+#hero .rv.d2{animation-delay:.40s}
+#hero .rv.d3{animation-delay:.58s}
+#hero .rv.d4{animation-delay:.76s}
+#hero .rv.d5{animation-delay:.94s}
+</style>
+</helmet>
+
+<canvas id="ksr-p" style="position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:2;opacity:0.32;"></canvas>
+<div id="lb-top" style="position:fixed;top:0;left:0;right:0;height:0;background:#000;z-index:60;pointer-events:none;transition:height .28s ease;"></div>
+<div id="lb-bot" style="position:fixed;bottom:0;left:0;right:0;height:0;background:#000;z-index:60;pointer-events:none;transition:height .28s ease;"></div>
+<div id="ksr-flash" style="position:fixed;inset:0;opacity:0;pointer-events:none;z-index:55;background:rgba(255,244,200,0.96);mix-blend-mode:screen;"></div>
+
+<nav style="position:fixed;top:0;left:0;right:0;z-index:100;padding:20px 56px;display:flex;justify-content:space-between;align-items:center;background:linear-gradient(to bottom,rgba(10,10,10,0.92) 0%,transparent 100%);animation:navfade .8s ease both;">
+  <div style="font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:300;letter-spacing:6px;color:#C9A84C;">KSR</div>
+  <div style="font-family:'Montserrat',sans-serif;font-size:8px;letter-spacing:5px;color:rgba(232,213,163,0.5);text-transform:uppercase;">Grand Events &amp; Catering</div>
+  <a href="tel:+919876543210" style="font-family:'Montserrat',sans-serif;font-size:9px;letter-spacing:2px;color:#C9A84C;text-decoration:none;border:1px solid rgba(201,168,76,0.38);padding:8px 20px;" style-hover="background:rgba(201,168,76,0.12);">+91 98765 43210</a>
+</nav>
+
+<!-- ââââââââââââââââââââââââââââââââââââââââââââââââââ -->
+<!-- SECTION 1 Â· GRAND ENTRANCE HERO                  -->
+<!-- ââââââââââââââââââââââââââââââââââââââââââââââââââ -->
+<section id="hero" style="position:relative;height:100vh;min-height:680px;display:flex;align-items:center;justify-content:center;overflow:hidden;background:#0A0A0A;">
+
+  <div style="position:absolute;inset:0;z-index:0;">
+    <img class="para-img" src="https://picsum.photos/id/1045/1920/1080" alt="Grand luxury venue atmosphere" style="width:100%;height:115%;object-fit:cover;object-position:center;filter:brightness(0.42) saturate(0.8) sepia(0.55) contrast(1.1);"/>
+    <div style="position:absolute;inset:0;background:radial-gradient(ellipse 80% 70% at 50% 48%,transparent 25%,rgba(10,10,10,0.68) 65%,#0A0A0A 100%);"></div>
+    <div style="position:absolute;bottom:0;left:0;right:0;height:240px;background:linear-gradient(transparent,#0A0A0A);"></div>
+    <div style="position:absolute;top:0;left:0;right:0;height:160px;background:linear-gradient(#0A0A0A,transparent);"></div>
+  </div>
+
+  <div id="hero-ov" style="position:relative;z-index:3;text-align:center;padding:0 24px;max-width:880px;will-change:transform,opacity,filter;">
+    <div class="rv" style="font-family:'Montserrat',sans-serif;font-size:9px;letter-spacing:7px;color:#C9A84C;text-transform:uppercase;margin-bottom:46px;">EST. 2000 &nbsp;Â·&nbsp; VIJAYAWADA &nbsp;Â·&nbsp; ANDHRA PRADESH</div>
+
+    <h1 style="font-family:'Cormorant Garamond',serif;font-weight:300;line-height:1.03;margin-bottom:34px;">
+      <div class="rv d1" style="font-size:clamp(50px,8vw,108px);color:#E8D5A3;display:block;">Every Great</div>
+      <div class="rv d2" style="font-size:clamp(58px,9.5vw,122px);font-style:italic;display:block;background:linear-gradient(90deg,#C9A84C 0%,#FFD700 38%,#C9A84C 62%,#FFD700 100%);background-size:200% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:shimmer 4s linear infinite;">Celebration</div>
+      <div class="rv d3" style="font-size:clamp(50px,8vw,108px);color:#E8D5A3;display:block;">Starts Here.</div>
+    </h1>
+
+    <div class="rv d4" style="width:110px;height:1px;background:linear-gradient(90deg,transparent,#C9A84C,transparent);margin:0 auto 30px;"></div>
+
+    <div class="rv d5" style="font-family:'Montserrat',sans-serif;font-size:8.5px;letter-spacing:2.5px;color:#C9A84C;display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:nowrap;white-space:nowrap;overflow:visible;">
+      <span>10,000+ Events</span><span style="opacity:.35;">Â·</span><span>25+ Years</span><span style="opacity:.35;">Â·</span><span>5â Rating</span><span style="opacity:.35;">Â·</span><span>500+ Clients</span>
+    </div>
+  </div>
+
+  <div style="position:absolute;bottom:48px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:14px;z-index:3;">
+    <div style="width:1px;height:52px;background:rgba(201,168,76,0.2);position:relative;overflow:hidden;">
+      <div style="position:absolute;left:0;right:0;height:20px;background:linear-gradient(#FFD700,#C9A84C);animation:scrolldrop 2.2s ease-in-out infinite;top:-20px;"></div>
+    </div>
+    <div style="font-family:'Montserrat',sans-serif;font-size:7px;letter-spacing:5px;color:rgba(201,168,76,0.55);text-transform:uppercase;">Scroll to Begin</div>
+  </div>
+</section>
+
+<!-- ââââââââââââââââââââââââââââââââââââââââââââââââââ -->
+<!-- SECTION 2 Â· WEDDING STORY                        -->
+<!-- ââââââââââââââââââââââââââââââââââââââââââââââââââ -->
+<section id="weddings" style="display:flex;flex-wrap:wrap;min-height:100vh;background:#0A0A0A;overflow:hidden;">
+
+  <div class="ph" style="flex:55;min-width:320px;position:relative;min-height:600px;">
+    <img class="para-img" src="https://picsum.photos/id/177/1200/900" alt="Warm cinematic wedding atmosphere" style="width:100%;height:115%;object-fit:cover;object-position:center top;filter:brightness(0.62) saturate(1.1) sepia(0.45) contrast(1.05);"/>
+    <div style="position:absolute;inset:0;background:linear-gradient(to right,transparent 55%,#0A0A0A 100%);"></div>
+    <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(10,10,10,0.45) 0%,transparent 28%);"></div>
+  </div>
+
+  <div style="flex:45;min-width:300px;display:flex;flex-direction:column;justify-content:center;padding:80px 60px 80px 40px;background:#0A0A0A;">
+    <div class="rv" style="font-family:'Montserrat',sans-serif;font-size:9px;letter-spacing:5px;color:#C9A84C;margin-bottom:28px;">â¦ &nbsp; WEDDINGS &nbsp; â¦</div>
+
+    <h2 style="font-family:'Cormorant Garamond',serif;font-weight:300;line-height:1.04;margin-bottom:26px;">
+      <div class="rv d1" style="font-size:clamp(38px,4.8vw,68px);color:#E8D5A3;display:block;">Where Two</div>
+      <div class="rv d2" style="font-size:clamp(38px,4.8vw,68px);color:#E8D5A3;display:block;">Souls Become</div>
+      <div class="rv d3" style="font-size:clamp(38px,4.8vw,68px);font-style:italic;color:#C9A84C;display:block;">One.</div>
+    </h2>
+
+    <div class="rv d4" style="width:66px;height:1px;background:linear-gradient(90deg,#C9A84C,transparent);margin-bottom:26px;"></div>
+
+    <p class="rv d5" style="font-family:'Montserrat',sans-serif;font-size:12px;line-height:2.1;color:rgba(232,213,163,0.62);margin-bottom:30px;font-weight:300;">From sacred traditional ceremonies to grand modern receptions â we craft the wedding your love story deserves.</p>
+
+    <ul class="rv" style="list-style:none;display:flex;flex-direction:column;gap:11px;margin-bottom:38px;">
+      <li style="font-size:11px;letter-spacing:.8px;color:rgba(232,213,163,0.72);display:flex;align-items:center;gap:12px;"><span style="color:#C9A84C;font-size:7px;flex-shrink:0;">â</span>Traditional &amp; Modern Ceremonies</li>
+      <li style="font-size:11px;letter-spacing:.8px;color:rgba(232,213,163,0.72);display:flex;align-items:center;gap:12px;"><span style="color:#C9A84C;font-size:7px;flex-shrink:0;">â</span>Mandap &amp; Floral Architecture</li>
+      <li style="font-size:11px;letter-spacing:.8px;color:rgba(232,213,163,0.72);display:flex;align-items:center;gap:12px;"><span style="color:#C9A84C;font-size:7px;flex-shrink:0;">â</span>Bridal Catering 50â2000 Guests</li>
+      <li style="font-size:11px;letter-spacing:.8px;color:rgba(232,213,163,0.72);display:flex;align-items:center;gap:12px;"><span style="color:#C9A84C;font-size:7px;flex-shrink:0;">â</span>Reception Design &amp; Lighting</li>
+      <li style="font-size:11px;letter-spacing:.8px;color:rgba(232,213,163,0.72);display:flex;align-items:center;gap:12px;"><span style="color:#C9A84C;font-size:7px;flex-shrink:0;">â</span>Photography Support &amp; DÃ©cor</li>
+    </ul>
+
+    <div class="rv">
+      <a href="#contact" style="display:inline-block;padding:13px 34px;border:1px solid #C9A84C;color:#C9A84C;font-family:'Montserrat',sans-serif;font-size:9px;letter-spacing:3px;text-transform:uppercase;text-decoration:none;transition:all .3s;" style-hover="background:#C9A84C;color:#0A0A0A;">PLAN YOUR WEDDING</a>
+    </div>
+  </div>
+</section>
+
+<!-- ââââââââââââââââââââââââââââââââââââââââââââââââââ -->
+<!-- SECTION 3 Â· BIRTHDAY CELEBRATION                 -->
+<!-- ââââââââââââââââââââââââââââââââââââââââââââââââââ -->
+<section id="birthdays" style="position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden;background:#0A0A0A;">
+
+  <div style="position:absolute;inset:0;z-index:0;background:#0a0a0a;">
+    <img class="para-img" src="https://picsum.photos/id/453/1920/1080" alt="Celebration stage lights" style="position:absolute;inset:0;width:100%;height:115%;object-fit:cover;filter:brightness(0.3) saturate(1.4) sepia(0.25);"/>
+    <div style="position:absolute;inset:0;background:radial-gradient(ellipse 65% 55% at 50% 55%,rgba(201,168,76,0.08) 0%,rgba(10,10,10,0.55) 70%);"></div>
+    <div id="bday-bokeh" style="position:absolute;inset:0;overflow:hidden;"></div>
+    <div style="position:absolute;inset:0;background:radial-gradient(ellipse 55% 55% at 50% 50%,rgba(201,168,76,0.08) 0%,transparent 70%);"></div>
+    <div style="position:absolute;bottom:0;left:0;right:0;height:220px;background:linear-gradient(transparent,#0A0A0A);"></div>
+    <div style="position:absolute;top:0;left:0;right:0;height:220px;background:linear-gradient(#0A0A0A,transparent);"></div>
+  </div>
+
+  <div id="bday-ov" style="position:relative;z-index:3;text-align:center;padding:100px 40px;max-width:740px;will-change:transform,opacity,filter;">
+    <div class="rv" style="font-family:'Montserrat',sans-serif;font-size:9px;letter-spacing:5px;color:#C9A84C;margin-bottom:28px;">â¦ &nbsp; BIRTHDAYS &amp; CELEBRATIONS &nbsp; â¦</div>
+
+    <h2 style="font-family:'Cormorant Garamond',serif;font-weight:300;line-height:1.0;margin-bottom:28px;">
+      <div class="rv d1" style="font-size:clamp(50px,8vw,96px);color:#E8D5A3;display:block;">Your Day.</div>
+      <div class="rv d2" style="font-size:clamp(50px,8vw,96px);color:#E8D5A3;display:block;">Your Grand Stage.</div>
+    </h2>
+
+    <p class="rv d3" style="font-family:'Montserrat',sans-serif;font-size:12px;line-height:2.1;color:rgba(232,213,163,0.68);margin-bottom:50px;font-weight:300;">5,000+ birthdays celebrated.<br/>Every single one unforgettable.</p>
+
+    <div class="rv d4" style="display:flex;gap:2px;justify-content:center;margin-bottom:52px;">
+      <div style="border:1px solid rgba(201,168,76,0.32);padding:24px 46px;backdrop-filter:blur(8px);background:rgba(10,10,10,0.45);">
+        <div class="cnt" data-t="5000" data-s="+" style="font-family:'Cormorant Garamond',serif;font-size:clamp(34px,5vw,56px);color:#FFD700;font-weight:300;">5,000+</div>
+        <div style="font-family:'Montserrat',sans-serif;font-size:8px;letter-spacing:3px;color:rgba(232,213,163,0.65);text-transform:uppercase;margin-top:7px;">Celebrations</div>
+      </div>
+      <div style="border:1px solid rgba(201,168,76,0.32);padding:24px 46px;backdrop-filter:blur(8px);background:rgba(10,10,10,0.45);">
+        <div style="font-family:'Cormorant Garamond',serif;font-size:clamp(34px,5vw,56px);color:#FFD700;font-weight:300;">5 â</div>
+        <div style="font-family:'Montserrat',sans-serif;font-size:8px;letter-spacing:3px;color:rgba(232,213,163,0.65);text-transform:uppercase;margin-top:7px;">Always Rated</div>
+      </div>
+    </div>
+
+    <div class="rv d5">
+      <a href="#contact" style="display:inline-block;padding:13px 34px;border:1px solid #C9A84C;color:#C9A84C;font-family:'Montserrat',sans-serif;font-size:9px;letter-spacing:3px;text-transform:uppercase;text-decoration:none;" style-hover="background:#C9A84C;color:#0A0A0A;">BOOK YOUR BIRTHDAY</a>
+    </div>
+  </div>
+</section>
+
+<!-- ââââââââââââââââââââââââââââââââââââââââââââââââââ -->
+<!-- SECTION 4 Â· CATERING EXPERIENCE                  -->
+<!-- ââââââââââââââââââââââââââââââââââââââââââââââââââ -->
+<section id="catering" style="display:flex;flex-wrap:wrap;min-height:100vh;background:#0A0A0A;overflow:hidden;">
+
+  <div style="flex:40;min-width:300px;display:flex;flex-direction:column;justify-content:center;padding:80px 44px 80px 60px;background:#0A0A0A;">
+    <div class="rv" style="font-family:'Montserrat',sans-serif;font-size:9px;letter-spacing:5px;color:#C9A84C;margin-bottom:28px;">â¦ &nbsp; LIVE CATERING &nbsp; â¦</div>
+
+    <h2 style="font-family:'Cormorant Garamond',serif;font-weight:300;line-height:1.04;margin-bottom:26px;">
+      <div class="rv d1" style="font-size:clamp(38px,4.8vw,68px);color:#E8D5A3;display:block;">A Feast</div>
+      <div class="rv d2" style="font-size:clamp(38px,4.8vw,68px);font-style:italic;color:#C9A84C;display:block;">for Every</div>
+      <div class="rv d3" style="font-size:clamp(38px,4.8vw,68px);color:#E8D5A3;display:block;">Sense.</div>
+    </h2>
+
+    <div class="rv d4" style="width:66px;height:1px;background:linear-gradient(90deg,#C9A84C,transparent);margin-bottom:26px;"></div>
+
+    <p class="rv d5" style="font-family:'Montserrat',sans-serif;font-size:12px;line-height:2.1;color:rgba(232,213,163,0.62);margin-bottom:30px;font-weight:300;">Our master chefs perform live before your guests â tandoor flames dance, woks ignite, desserts are crafted right before your eyes.</p>
+
+    <ul class="rv" style="list-style:none;display:flex;flex-direction:column;gap:14px;margin-bottom:38px;">
+      <li style="font-size:12px;color:#C9A84C;display:flex;align-items:center;gap:12px;"><span>ð¥</span><span>Live Tandoor Station</span></li>
+      <li style="font-size:12px;color:#C9A84C;display:flex;align-items:center;gap:12px;"><span>ð</span><span>Live Wok &amp; Chinese Counter</span></li>
+      <li style="font-size:12px;color:#C9A84C;display:flex;align-items:center;gap:12px;"><span>ð®</span><span>Dessert &amp; Chaat Live Station</span></li>
+      <li style="font-size:12px;color:#C9A84C;display:flex;align-items:center;gap:12px;"><span>ð¥¤</span><span>Premium Mocktail Bar</span></li>
+    </ul>
+
+    <div class="rv">
+      <a href="#contact" style="display:inline-block;padding:13px 34px;border:1px solid #C9A84C;color:#C9A84C;font-family:'Montserrat',sans-serif;font-size:9px;letter-spacing:3px;text-transform:uppercase;text-decoration:none;" style-hover="background:#C9A84C;color:#0A0A0A;">VIEW FULL MENU</a>
+    </div>
+  </div>
+
+  <div class="ph" style="flex:60;min-width:300px;position:relative;min-height:600px;">
+    <img class="para-img" src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1400&q=80" alt="Luxury live catering spread" style="width:100%;height:115%;object-fit:cover;filter:brightness(0.7) saturate(1.3) sepia(0.22);"/>
+    <div style="position:absolute;inset:0;background:linear-gradient(to left,transparent 55%,#0A0A0A 100%);"></div>
+    <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(10,10,10,0.4),transparent 30%);"></div>
+  </div>
+</section>
+
+<!-- ââââââââââââââââââââââââââââââââââââââââââââââââââ -->
+<!-- SECTION 5 Â· HAPPY FACES / TESTIMONIALS           -->
+<!-- ââââââââââââââââââââââââââââââââââââââââââââââââââ -->
+<section id="stories" style="min-height:100vh;padding:100px 40px 80px;background:#0A0A0A;overflow:hidden;">
+
+  <div style="text-align:center;margin-bottom:72px;">
+    <div class="rv" style="font-family:'Montserrat',sans-serif;font-size:9px;letter-spacing:5px;color:#C9A84C;margin-bottom:18px;">â¦ &nbsp; 10,000+ STORIES &nbsp; â¦</div>
+    <div class="rv d1" style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(40px,6vw,76px);color:#E8D5A3;">The Smiles Say</div>
+    <div class="rv d2" style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(40px,6vw,76px);font-style:italic;background:linear-gradient(90deg,#C9A84C 0%,#FFD700 40%,#C9A84C 70%,#FFD700 100%);background-size:200%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:shimmer 4s linear infinite;">Everything.</div>
+  </div>
+
+  <div id="photo-grid" style="columns:3;column-gap:5px;max-width:1100px;margin:0 auto 72px;">
+    <div class="ph rv" style="break-inside:avoid;margin-bottom:5px;border:1px solid rgba(201,168,76,0.12);">
+      <img src="https://picsum.photos/id/64/520/500" alt="Family at celebration" style="width:100%;height:auto;display:block;filter:brightness(0.82) sepia(0.2);"/>
+    </div>
+    <div class="ph rv d1" style="break-inside:avoid;margin-bottom:5px;border:1px solid rgba(201,168,76,0.12);">
+      <img src="https://picsum.photos/id/65/520/320" alt="Birthday celebration golden light" style="width:100%;height:auto;display:block;filter:brightness(0.8) sepia(0.25) saturate(1.2);"/>
+    </div>
+    <div class="ph rv d2" style="break-inside:avoid;margin-bottom:5px;border:1px solid rgba(201,168,76,0.12);">
+      <img src="https://picsum.photos/id/453/520/340" alt="Event stage performance lights" style="width:100%;height:auto;display:block;filter:brightness(0.85) sepia(0.15);"/>
+    </div>
+    <div class="ph rv d1" style="break-inside:avoid;margin-bottom:5px;border:1px solid rgba(201,168,76,0.12);">
+      <img src="https://picsum.photos/id/550/520/380" alt="Couple at celebration event" style="width:100%;height:auto;display:block;filter:brightness(0.8) sepia(0.2) saturate(1.1);"/>
+    </div>
+    <div class="ph rv d2" style="break-inside:avoid;margin-bottom:5px;border:1px solid rgba(201,168,76,0.12);">
+      <img src="https://picsum.photos/id/338/520/300" alt="Guests at event celebration" style="width:100%;height:auto;display:block;filter:brightness(0.82) sepia(0.18);"/>
+    </div>
+    <div class="ph rv d3" style="break-inside:avoid;margin-bottom:5px;border:1px solid rgba(201,168,76,0.12);">
+      <img src="https://picsum.photos/id/177/520/440" alt="Cinematic event moment golden light" style="width:100%;height:auto;display:block;filter:brightness(0.78) sepia(0.3) saturate(1.1);"/>
+    </div>
+  </div>
+
+  <div class="rv" style="max-width:660px;margin:0 auto;text-align:center;padding:50px 54px;border:1px solid rgba(201,168,76,0.18);position:relative;background:rgba(201,168,76,0.02);">
+    <div style="position:absolute;top:-1px;left:-1px;width:28px;height:28px;border-top:1.5px solid #C9A84C;border-left:1.5px solid #C9A84C;"></div>
+    <div style="position:absolute;top:-1px;right:-1px;width:28px;height:28px;border-top:1.5px solid #C9A84C;border-right:1.5px solid #C9A84C;"></div>
+    <div style="position:absolute;bottom:-1px;left:-1px;width:28px;height:28px;border-bottom:1.5px solid #C9A84C;border-left:1.5px solid #C9A84C;"></div>
+    <div style="position:absolute;bottom:-1px;right:-1px;width:28px;height:28px;border-bottom:1.5px solid #C9A84C;border-right:1.5px solid #C9A84C;"></div>
+    <div style="font-family:'Cormorant Garamond',serif;font-size:88px;color:#C9A84C;line-height:0.35;margin-bottom:28px;">"</div>
+    <p style="font-family:'Cormorant Garamond',serif;font-size:clamp(17px,2.2vw,24px);font-style:italic;color:#E8D5A3;line-height:1.78;margin-bottom:24px;">KSR Grand transformed our daughter's wedding into a fairy tale. Every single detail was beyond perfect.</p>
+    <div style="font-family:'Montserrat',sans-serif;font-size:9px;letter-spacing:3px;color:#C9A84C;margin-bottom:13px;">â Ramesh Reddy, Vijayawada</div>
+    <div style="color:#FFD700;font-size:13px;letter-spacing:6px;">â â â â â</div>
+  </div>
+</section>
+
+<!-- ââââââââââââââââââââââââââââââââââââââââââââââââââ -->
+<!-- SECTION 6 Â· GRAND FINALE / CTA                   -->
+<!-- ââââââââââââââââââââââââââââââââââââââââââââââââââ -->
+<section id="contact" style="position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden;background:#0A0A0A;">
+
+  <div style="position:absolute;inset:0;z-index:0;">
+    <img class="para-img" src="https://picsum.photos/id/188/1920/1080" alt="Aerial luxury venue night view" style="width:100%;height:115%;object-fit:cover;filter:brightness(0.22) saturate(1.1) sepia(0.55) contrast(1.15);"/>
+    <div style="position:absolute;inset:0;background:radial-gradient(ellipse 60% 60% at 50% 55%,rgba(201,168,76,0.08) 0%,rgba(10,10,10,0.92) 80%);"></div>
+    <div style="position:absolute;inset:0;background:linear-gradient(to bottom,#0A0A0A 0%,transparent 18%,transparent 82%,#0A0A0A 100%);"></div>
+  </div>
+
+  <div id="cta-ov" style="position:relative;z-index:3;text-align:center;padding:80px 40px;max-width:840px;will-change:transform,opacity,filter;">
+    <div class="rv" style="font-family:'Montserrat',sans-serif;font-size:8px;letter-spacing:7px;color:#C9A84C;margin-bottom:42px;">EST. 2000 &nbsp;Â·&nbsp; VIJAYAWADA &nbsp;Â·&nbsp; ANDHRA PRADESH</div>
+
+    <div class="rv d1" style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(24px,3.6vw,48px);font-style:italic;color:#E8D5A3;margin-bottom:8px;">"We don't just organize events.</div>
+    <div class="rv d2" style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(24px,3.6vw,48px);font-style:italic;margin-bottom:46px;background:linear-gradient(90deg,#C9A84C 0%,#FFD700 40%,#C9A84C 70%,#FFD700 100%);background-size:200%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:shimmer 4s linear infinite;">We create memories that last forever."</div>
+
+    <div class="rv d3" style="width:110px;height:1px;background:linear-gradient(90deg,transparent,#C9A84C,transparent);margin:0 auto 46px;"></div>
+
+    <div class="rv d4" style="display:flex;justify-content:center;flex-wrap:wrap;margin-bottom:62px;">
+      <div style="padding:16px 32px;text-align:center;border-right:1px solid rgba(201,168,76,0.22);">
+        <div class="cnt" data-t="10000" data-s="+" style="font-family:'Cormorant Garamond',serif;font-size:clamp(28px,4vw,46px);color:#C9A84C;font-weight:300;">10,000+</div>
+        <div style="font-family:'Montserrat',sans-serif;font-size:7px;letter-spacing:3px;color:rgba(232,213,163,0.5);text-transform:uppercase;margin-top:7px;">Events</div>
+      </div>
+      <div style="padding:16px 32px;text-align:center;border-right:1px solid rgba(201,168,76,0.22);">
+        <div style="font-family:'Cormorant Garamond',serif;font-size:clamp(28px,4vw,46px);color:#C9A84C;font-weight:300;">25+</div>
+        <div style="font-family:'Montserrat',sans-serif;font-size:7px;letter-spacing:3px;color:rgba(232,213,163,0.5);text-transform:uppercase;margin-top:7px;">Years</div>
+      </div>
+      <div style="padding:16px 32px;text-align:center;border-right:1px solid rgba(201,168,76,0.22);">
+        <div style="font-family:'Cormorant Garamond',serif;font-size:clamp(28px,4vw,46px);color:#C9A84C;font-weight:300;">500+</div>
+        <div style="font-family:'Montserrat',sans-serif;font-size:7px;letter-spacing:3px;color:rgba(232,213,163,0.5);text-transform:uppercase;margin-top:7px;">Clients</div>
+      </div>
+      <div style="padding:16px 32px;text-align:center;">
+        <div style="font-family:'Cormorant Garamond',serif;font-size:clamp(28px,4vw,46px);color:#C9A84C;font-weight:300;">5 â</div>
+        <div style="font-family:'Montserrat',sans-serif;font-size:7px;letter-spacing:3px;color:rgba(232,213,163,0.5);text-transform:uppercase;margin-top:7px;">Always</div>
+      </div>
+    </div>
+
+    <div class="rv d5" style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin-bottom:50px;">
+      <a href="tel:+919876543210" style="display:inline-block;padding:15px 38px;background:linear-gradient(135deg,#C9A84C 0%,#FFD700 100%);color:#0A0A0A;font-family:'Montserrat',sans-serif;font-size:9px;letter-spacing:3px;text-transform:uppercase;text-decoration:none;font-weight:700;" style-hover="box-shadow:0 12px 36px rgba(201,168,76,0.45);transform:translateY(-2px);">START PLANNING NOW</a>
+      <a href="#hero" style="display:inline-block;padding:15px 38px;border:1px solid #C9A84C;color:#C9A84C;font-family:'Montserrat',sans-serif;font-size:9px;letter-spacing:3px;text-transform:uppercase;text-decoration:none;" style-hover="background:#C9A84C;color:#0A0A0A;">VIEW OUR EVENTS</a>
+    </div>
+
+    <div class="rv" style="display:flex;flex-direction:column;gap:11px;align-items:center;margin-bottom:46px;">
+      <div style="font-family:'Montserrat',sans-serif;font-size:10px;color:rgba(201,168,76,0.65);letter-spacing:1px;">ð Vijayawada, Andhra Pradesh</div>
+      <div style="font-family:'Montserrat',sans-serif;font-size:10px;color:rgba(201,168,76,0.65);letter-spacing:1px;">ð +91 98765 43210</div>
+      <div style="font-family:'Montserrat',sans-serif;font-size:10px;color:rgba(201,168,76,0.65);letter-spacing:1px;">ð§ <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="c2abaca4ad82a9b1b0a7b4a7acb6b1eca1adaf">[email&#160;protected]</a></div>
+    </div>
+
+    <div style="width:110px;height:1px;background:linear-gradient(90deg,transparent,rgba(201,168,76,0.3),transparent);margin:0 auto 20px;"></div>
+    <div style="font-family:'Montserrat',sans-serif;font-size:8px;letter-spacing:2px;color:rgba(201,168,76,0.28);">Â© 2025 KSR Grand Events &amp; Catering Â· All Rights Reserved</div>
+  </div>
+</section>
+</x-dc>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  componentDidMount() {
+    this.sy = 0; this.psy = 0; this.rawVel = 0; this.smoothVel = 0;
+    this.flashVal = 0; this.hasFlashed = false;
+    this.mouse = { x: 0, y: 0 }; this.tMouse = { x: 0, y: 0 };
+    this.ps = [];
+
+    this._onScroll = () => { this.sy = window.scrollY; };
+    this._onMouse = e => {
+      this.tMouse.x = (e.clientX / innerWidth - 0.5) * 2;
+      this.tMouse.y = -(e.clientY / innerHeight - 0.5) * 2;
+    };
+    this._onResize = () => {
+      const c = document.getElementById('ksr-p');
+      if (c) { c.width = innerWidth; c.height = innerHeight; }
+    };
+
+    window.addEventListener('scroll', this._onScroll, { passive: true });
+    window.addEventListener('mousemove', this._onMouse, { passive: true });
+    window.addEventListener('resize', this._onResize);
+    document.querySelectorAll('img').forEach(img =>
+      img.addEventListener('error', function(){ this.style.display = 'none'; })
+    );
+
+    this.initParticles();
+    this.initReveal();
+    this.initCounters();
+    this.initBdayBokeh();
+    this._raf = requestAnimationFrame(this._tick.bind(this));
+  }
+
+  componentWillUnmount() {
+    cancelAnimationFrame(this._raf);
+    window.removeEventListener('scroll', this._onScroll);
+    window.removeEventListener('mousemove', this._onMouse);
+    window.removeEventListener('resize', this._onResize);
+  }
+
+  _tick() {
+    // Velocity
+    this.rawVel = this.sy - this.psy;
+    this.psy = this.sy;
+    this.smoothVel += (Math.abs(this.rawVel) - this.smoothVel) * 0.1;
+
+    // Mouse
+    this.mouse.x += (this.tMouse.x - this.mouse.x) * 0.04;
+    this.mouse.y += (this.tMouse.y - this.mouse.y) * 0.04;
+
+    this._tickHero();
+    this._tickFlash();
+    this._tickParallax();
+    this._tickLetterbox();
+    this._tickChroma();
+    this._tickOverlays();
+
+    this._raf = requestAnimationFrame(this._tick.bind(this));
+  }
+
+  _tickHero() {
+    const hero = document.getElementById('hero');
+    if (!hero) return;
+    const img = hero.querySelector('.para-img');
+    const vh = innerHeight;
+    const p = Math.max(0, Math.min(this.sy / vh, 1));
+
+    // Cinematic zoom: scale up as camera "flies in"
+    if (img) {
+      const scale = 1 + p * 0.34;
+      const tiltX = this.rawVel * -0.009;
+      const br = Math.max(0.16, 0.48 - p * 0.24);
+      const bl = p * 2.8;
+      img.style.transform = `scale(${scale}) translateY(${(p * 9).toFixed(1)}%) rotateX(${tiltX.toFixed(2)}deg)`;
+      img.style.filter = `brightness(${br.toFixed(2)}) saturate(1.3) sepia(0.28)${bl > 0.3 ? ` blur(${bl.toFixed(1)}px)` : ''}`;
+    }
+
+    // Hero text: .rv children handle entrance; hero-ov only fades OUT on scroll exit
+    const ov = document.getElementById('hero-ov');
+    if (ov) {
+      const enter = 1;
+      const exit  = Math.max(0, (p - 0.28) / 0.42);
+      const opacity = Math.max(0, enter * (1 - exit * 1.4));
+      const ty  = (1 - enter) * 22 - exit * 18;
+      const sc  = 1 + exit * 0.09;
+      const bl  = exit * 8;
+      ov.style.opacity   = opacity.toFixed(3);
+      ov.style.transform = `translateY(${ty.toFixed(1)}px) scale(${sc.toFixed(3)})`;
+      ov.style.filter    = bl > 0.2 ? `blur(${bl.toFixed(1)}px)` : 'none';
+    }
+
+    // Flash: warm golden burst when scrolling 42% into the hero
+    if (!this.hasFlashed && p > 0.42) {
+      this.hasFlashed = true;
+      this.flashVal = 1.0;
+    }
+  }
+
+  _tickFlash() {
+    if (this.flashVal <= 0.004) { this.flashVal = 0; return; }
+    this.flashVal *= 0.872;
+    const flash = document.getElementById('ksr-flash');
+    if (flash) flash.style.opacity = this.flashVal.toFixed(3);
+  }
+
+  _tickParallax() {
+    const vh = innerHeight;
+    document.querySelectorAll('.para-img').forEach(img => {
+      if (img.closest('#hero')) return;
+      const sec = img.closest('section');
+      if (!sec) return;
+      const r = sec.getBoundingClientRect();
+      if (r.bottom < -200 || r.top > vh + 200) return;
+      const prog = (vh - r.top) / (vh + r.height);
+      const tiltX = this.rawVel * -0.004;
+      img.style.transform = `translateY(${((0.5 - prog) * 60).toFixed(1)}px) rotateX(${tiltX.toFixed(2)}deg)`;
+    });
+  }
+
+  _tickLetterbox() {
+    const h = Math.min(this.smoothVel * 1.6, 5.5);
+    const top = document.getElementById('lb-top');
+    const bot = document.getElementById('lb-bot');
+    if (top) top.style.height = h.toFixed(2) + 'vh';
+    if (bot) bot.style.height = h.toFixed(2) + 'vh';
+  }
+
+  _tickChroma() {
+    // Body filter removed â caused compositing issues. Chroma effect via overlay vignette instead.
+    const str = Math.min(this.smoothVel * 0.045, 0.9);
+    const vig = document.getElementById('ksr-flash');
+    if (vig && str > 0.08) {
+      vig.style.opacity = (str * 0.04).toFixed(3);
+      vig.style.background = 'rgba(255,240,200,0.6)';
+    }
+  }
+
+  _tickOverlays() {
+    const vh = innerHeight;
+    // Centered overlay sections: enter slide-up, exit zoom+blur out
+    ['bday-ov', 'cta-ov'].forEach(id => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      const r = el.getBoundingClientRect();
+      if (r.bottom < -400 || r.top > vh + 400) return;
+      const enterP = Math.max(0, Math.min(1, (vh - r.top) / (vh * 0.52)));
+      const exitP  = Math.max(0, Math.min(1, -r.bottom / (vh * 0.3)));
+      const opacity = Math.max(0, enterP * (1 - exitP * 1.5));
+      const ty  = (1 - enterP) * 32 - exitP * 14;
+      const sc  = 1 + exitP * 0.065;
+      const bl  = exitP * 6;
+      el.style.opacity   = opacity.toFixed(3);
+      el.style.transform = `translateY(${ty.toFixed(1)}px) scale(${sc.toFixed(3)})`;
+      el.style.filter    = bl > 0.15 ? `blur(${bl.toFixed(1)}px)` : 'none';
+    });
+  }
+
+  initParticles() {
+    const c = document.getElementById('ksr-p');
+    if (!c) return;
+    const g = c.getContext('2d');
+    c.width = innerWidth; c.height = innerHeight;
+
+    this.ps = Array.from({ length: 75 }, () => ({
+      x: Math.random() * innerWidth,
+      y: Math.random() * innerHeight,
+      r: Math.random() * 1.65 + 0.28,
+      s: Math.random() * 0.44 + 0.1,
+      o: Math.random() * 0.44 + 0.1,
+      w: Math.random() * Math.PI * 2,
+      vx: 0, vy: 0,
+    }));
+
+    const draw = () => {
+      const canvas = document.getElementById('ksr-p');
+      if (!canvas) return;
+      g.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Cursor attractor â particles drift toward mouse-offset center
+      const mx = this.mouse.x * canvas.width * 0.09;
+      const my = -this.mouse.y * canvas.height * 0.06;
+      const cx = canvas.width / 2 + mx;
+      const cy = canvas.height / 2 + my;
+
+      this.ps.forEach(p => {
+        const dx = cx - p.x, dy = cy - p.y;
+        const dist = Math.sqrt(dx * dx + dy * dy) || 1;
+        p.vx += (dx / dist) * 0.0042;
+        p.vy += (dy / dist) * 0.0032;
+        p.vx *= 0.967; p.vy *= 0.967;
+        p.w  += 0.0062;
+        p.x  += Math.sin(p.w) * 0.33 + p.vx;
+        p.y  -= p.s + p.vy;
+        if (p.y < -6) { p.y = canvas.height + 6; p.x = Math.random() * canvas.width; p.vx = 0; p.vy = 0; }
+        if (p.x < -10) p.x = canvas.width + 10;
+        if (p.x > canvas.width + 10) p.x = -10;
+        g.globalAlpha = p.o;
+        g.fillStyle = (p.w % 2.8) < 1.2 ? '#FFD700' : '#C9A84C';
+        g.beginPath(); g.arc(p.x, p.y, p.r, 0, 6.283); g.fill();
+      });
+      requestAnimationFrame(draw);
+    };
+    draw();
+  }
+
+  initReveal() {
+    const reveal = el => el.classList.add('on');
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { reveal(e.target); obs.unobserve(e.target); } });
+    }, { threshold: 0.06, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.rv').forEach(el => {
+      const r = el.getBoundingClientRect();
+      // If already in viewport on load, reveal after a staggered delay
+      if (r.top < innerHeight && r.bottom > 0) {
+        const delay = parseFloat(getComputedStyle(el).transitionDelay) * 1000 || 0;
+        setTimeout(() => reveal(el), delay + 80);
+      } else {
+        obs.observe(el);
+      }
+    });
+  }
+
+  initCounters() {
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (!e.isIntersecting) return;
+        const el = e.target;
+        const target = parseInt(el.dataset.t, 10);
+        const suffix = el.dataset.s || '';
+        let n = 0;
+        const step = Math.max(1, Math.ceil(target / 80));
+        const timer = setInterval(() => {
+          n = Math.min(n + step, target);
+          el.textContent = n.toLocaleString('en-IN') + suffix;
+          if (n >= target) clearInterval(timer);
+        }, 18);
+        obs.unobserve(el);
+      });
+    }, { threshold: 0.5 });
+    document.querySelectorAll('.cnt').forEach(el => obs.observe(el));
+  }
+
+  initBdayBokeh() {
+    const wrap = document.getElementById('bday-bokeh');
+    if (!wrap) return;
+    const frag = document.createDocumentFragment();
+    const colors = ['#C9A84C','#FFD700','#FF8C00','#FF6B35','#FFF8DC'];
+    for (let i = 0; i < 55; i++) {
+      const d = document.createElement('div');
+      const sz = Math.random() * 6 + 2;
+      const x = Math.random() * 100;
+      const y = Math.random() * 100;
+      const dur = (Math.random() * 4 + 3).toFixed(1);
+      const del = (Math.random() * 6).toFixed(1);
+      const col = colors[Math.floor(Math.random() * colors.length)];
+      const op = (Math.random() * 0.55 + 0.1).toFixed(2);
+      d.style.cssText = `position:absolute;border-radius:50%;left:${x}%;top:${y}%;width:${sz}px;height:${sz}px;background:${col};opacity:${op};filter:blur(${(sz * 0.8).toFixed(1)}px);animation:bokehFloat ${dur}s ${del}s ease-in-out infinite alternate;`;
+      frag.appendChild(d);
+    }
+    // Sparkle streaks
+    for (let i = 0; i < 18; i++) {
+      const s = document.createElement('div');
+      const x = Math.random() * 100, y = Math.random() * 100;
+      const dur = (Math.random() * 2 + 1.5).toFixed(1);
+      const del = (Math.random() * 5).toFixed(1);
+      s.style.cssText = `position:absolute;left:${x}%;top:${y}%;width:1px;height:${(Math.random()*28+8).toFixed(0)}px;background:linear-gradient(#FFD700,transparent);opacity:0;animation:sparkleUp ${dur}s ${del}s ease-out infinite;transform:rotate(${(Math.random()*30-15).toFixed(0)}deg);`;
+      frag.appendChild(s);
+    }
+    wrap.appendChild(frag);
+    // Inject keyframes once
+    if (!document.getElementById('bday-kf')) {
+      const st = document.createElement('style');
+      st.id = 'bday-kf';
+      st.textContent = `@keyframes bokehFloat{0%{transform:translateY(0) scale(1)}100%{transform:translateY(-22px) scale(1.15)}} @keyframes sparkleUp{0%{opacity:0;transform:translateY(0) rotate(inherit)}40%{opacity:0.9}100%{opacity:0;transform:translateY(-40px) rotate(inherit)}}`;
+      document.head.appendChild(st);
+    }
+  }
+
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>
