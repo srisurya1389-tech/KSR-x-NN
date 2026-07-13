@@ -173,17 +173,6 @@ function HeroSection() {
             </h1>
           </div>
 
-          {/* Sponsors */}
-          <div>
-            <p style={{ fontFamily: '"Perfume Sans 1", sans-serif', fontWeight: 600, fontSize: 14, color: DIM, letterSpacing: '.02em', marginBottom: 12 }}>
-              {TEXT.sponsorLabel}
-            </p>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 20, flexWrap: 'wrap' }}>
-              <img src={IMG.sponsor1} alt="Sponsor 1" style={{ height: 20, width: 'auto', filter: 'brightness(0) invert(1)', opacity: .7 }} />
-              <img src={IMG.sponsor2} alt="Sponsor 2" style={{ height: 20, width: 'auto', filter: 'brightness(0) invert(1)', opacity: .7 }} />
-              <img src={IMG.sponsor3} alt="Sponsor 3" style={{ height: 27, width: 'auto', filter: 'brightness(0) invert(1)', opacity: .7 }} />
-            </div>
-          </div>
 
           {/* Email signup */}
           <form onSubmit={e => e.preventDefault()} style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
@@ -206,40 +195,6 @@ function HeroSection() {
           </form>
         </div>
 
-        {/* Right — visual stack */}
-        <div style={{ flex: 1, position: 'relative', height: 700, minWidth: 0 }}>
-
-          {/* Floating small chat card (top-left of visual) */}
-          <div style={{
-            position: 'absolute', top: 0, left: -80, width: 310,
-            transform: 'rotate(-12deg)',
-            zIndex: 1,
-          }}>
-            <img src={IMG.heroCard} alt="Hero card" style={{ width: '100%', display: 'block' }} />
-          </div>
-
-          {/* Folder stack (center) */}
-          <div style={{ position: 'absolute', top: 40, left: '10%', width: '60%', zIndex: 2 }}>
-            <img src={IMG.folderBack}    alt="" style={{ position: 'absolute', top: 0, left: 0, width: '100%', opacity: .6 }} />
-            <img src={IMG.folderPaper}   alt="" style={{ position: 'absolute', top: 0, left: 0, width: '100%', opacity: .8 }} />
-            <img src={IMG.folderReceipt} alt="" style={{ position: 'absolute', top: 0, left: 0, width: '100%', opacity: .9, filter: 'blur(.75px)' }} />
-            <img src={IMG.folderFront}   alt="" style={{ position: 'relative',  width: '100%', display: 'block' }} />
-          </div>
-
-          {/* Central magazine cover */}
-          <div style={{ position: 'absolute', top: 20, left: '5%', width: '65%', zIndex: 3 }}>
-            <img src={IMG.heroCover} alt="Main cover" style={{ width: '100%', display: 'block', objectFit: 'cover' }} />
-          </div>
-
-          {/* Small side book card */}
-          <div style={{
-            position: 'absolute', bottom: 40, right: 0, width: 220,
-            transform: 'rotate(8deg)', zIndex: 2,
-          }}>
-            <img src={IMG.heroSideCard} alt="Side card" style={{ width: '100%', display: 'block', filter: 'blur(1px)' }} />
-          </div>
-
-        </div>
       </div>
     </section>
   )
